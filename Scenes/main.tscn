@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://boka4rma7cyfw"]
+
+[ext_resource type="PackedScene" uid="uid://dt325nl72ii58" path="res://Objects/player.tscn" id="1_jjgbg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8gbba"]
+size = Vector2(127, 83.875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bo1nx"]
+size = Vector2(710, 73)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjvhh"]
+size = Vector2(337, 41)
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_jjgbg")]
+position = Vector2(15, 20.165)
+floor_snap_length = 4.0
+Speed = 500.0
+Gravity = 750.0
+JumpPower = 500.0
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2(20, 135)
+shape = SubResource("RectangleShape2D_8gbba")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-356, 134)
+shape = SubResource("RectangleShape2D_8gbba")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-65, 213)
+shape = SubResource("RectangleShape2D_bo1nx")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls"]
+position = Vector2(441, 251)
+rotation = 0.345575
+shape = SubResource("RectangleShape2D_jjvhh")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+position = Vector2(756, 304)
+polygon = PackedVector2Array(34, -140, -148, -14, -168, 244, 528, 241, 807, 242, 882, 183, 616, 95, 501, 3, 334, -56, 190, 19)
