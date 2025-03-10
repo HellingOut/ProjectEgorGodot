@@ -4,57 +4,43 @@ using Godot;
 public partial class Player : CharacterBody2D
 {
 	float _direction = 0;
-
+	public float Speed = 0;
 	[Export]
-	public float Speed = 200;
+	public float TopSpeed = 300;
 	[Export]
-	public float Gravity = 100;
+	public float Acceleration = 0.1f;
 	[Export]
-	public float JumpPower = 400;
-	bool IsJumpedAnimationEnded(){
-		if(Velocity.Y == JumpPower)
-			return true;
-		else if(IsOnWall())
-			return true;
-		else if(IsOnFloor())
-			return true;
-		//else if(collision)
-		return false;
-	}
+	public float Braking = 0.6f;
+	[Export]
+	public float Gravity = 20;
+	[Export]
+	public float JumpPower = 600;
 	void Move(ref Vector2 localVelocity, double delta){
-		
 		_direction = Input.GetAxis("walk_left", "walk_right");
 		if(_direction != 0){
-			localVelocity.X += _direction * Speed;
+			localVelocity.X = Mathf.Lerp(localVelocity.X, TopSpeed * _direction, Acceleration);
 		}
-		else if(_direction == 0) {
-			localVelocity.X = Mathf.Lerp(localVelocity.X, 0,0.05f);
+		else if(_direction == 0){
+			localVelocity.X = Mathf.Lerp(localVelocity.X, 0, Braking);
 		}
 	}
-	void Jump(ref Vector2 localVelocity, double delta){
-		bool jumping = false;
-		if (IsOnFloor())
-		{ 
-			if(Input.IsActionJustPressed("jump"))
-			{
-				localVelocity.Y = -JumpPower;
-				jumping = true;
+	void Jump(ref Vector2 localVelocity){
+		if (IsOnFloor()){ 
+			if(Input.IsActionJustPressed("jump")){
+				localVelocity.Y -= JumpPower;
 			}
-		}
-		else if(IsJumpedAnimationEnded() || !jumping){
-				localVelocity.Y = Mathf.Lerp(localVelocity.Y, Gravity, 0.5f );
-			// Логика чтоб кирпичем при прыжке сразу не падал
-		}
-		
+		}		
 	}
-
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 localVelocity = Velocity;
 		Move(ref localVelocity,delta);
 		Velocity = localVelocity;
-		Jump(ref localVelocity,delta);
+		Jump(ref localVelocity);
 		Velocity = localVelocity;
+		localVelocity.Y += Gravity;
+		Velocity = localVelocity;
+		Speed = Velocity.X;
 		MoveAndSlide();
 		
 	}
