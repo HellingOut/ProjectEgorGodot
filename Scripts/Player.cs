@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Text;
 using Godot;
 
@@ -6,6 +7,7 @@ public partial class Player : CharacterBody2D
 {
 	AnimatedSprite2D _sprite = null;
 	CollisionShape2D _collision = null;
+	Area2D _area2D = null;
 	float _direction = 0;
 	[Export] public float TopSpeed = 300;
 	[Export] public float Acceleration = 0.1f;
@@ -16,7 +18,20 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		_sprite = GetNode<AnimatedSprite2D>("Sprite");
+		_area2D = GetNode<Area2D>("Area2D");
+		_area2D.Connect("body_entered", new Godot.Callable(this,"OnBodyEntered"));
 	}
+
+	void OnBodyEntered(Node2D body){
+		var bodyVelocityObject = body.Get("velocity");
+		var bodyVelocity = bodyVelocityObject.AsVector2();
+		GD.Print(bodyVelocity.X);
+		GD.Print(Velocity.X);
+		if(body.IsInGroup("Enemy") && (Mathf.Abs(Velocity.X) > Mathf.Abs(bodyVelocity.X))){
+			bodyVelocity.X = 100 * Mathf.Sign(Velocity.X);
+		}
+			body.Set("velocity",bodyVelocity);
+		}
 
 	void YAnimationsPlay(Vector2 vel)
 	{
@@ -73,6 +88,7 @@ public partial class Player : CharacterBody2D
 	{
 		SetCollisionMaskValue(2, true);
 	}
+	
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -92,11 +108,8 @@ public partial class Player : CharacterBody2D
 		}
 		Velocity = localVelocity;
 		MoveAndSlide();
-	}
 
-    internal void Die()
-    {
-        throw new NotImplementedException();
-    }
+
+	}
 
 }

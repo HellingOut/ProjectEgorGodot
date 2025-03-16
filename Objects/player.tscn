@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dt325nl72ii58"]
+[gd_scene load_steps=13 format=3 uid="uid://dt325nl72ii58"]
 
 [ext_resource type="Script" uid="uid://ddh8n5t1c1h0" path="res://Scripts/Player.cs" id="1_3y5cq"]
 [ext_resource type="Texture2D" uid="uid://bqy8vlp4kibey" path="res://Assets/Sprites/characters.png" id="2_3y5cq"]
@@ -79,6 +79,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2i4gt"]
+height = 23.0
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3y5cq")
 Acceleration = 10.0
@@ -99,3 +102,12 @@ animation = &"walk"
 autoplay = "idle"
 frame = 2
 frame_progress = 0.403009
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_2i4gt")
+debug_color = Color(0.953292, 0.102954, 0.480093, 0.42)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

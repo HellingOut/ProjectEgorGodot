@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[GlobalClass]
 public partial class Enemy : CharacterBody2D
 {
 	CollisionShape2D _collision = null;
@@ -68,14 +69,6 @@ public partial class Enemy : CharacterBody2D
 		SetCollisionMaskValue(2, true);
 	}
 
-	void CollideWithEntity(){
-		for(int i = 0; i < GetSlideCollisionCount(); ++i){
-			var entity = GetSlideCollision(i);
-			var entityСollider = entity.GetCollider();
-			var entityVelocity = entity.GetColliderVelocity();
-			if(entity.)
-		}
-	}
 
 	public override void _PhysicsProcess(double delta)
 	{
