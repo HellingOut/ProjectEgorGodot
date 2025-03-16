@@ -93,4 +93,10 @@ public partial class Player : CharacterBody2D
 		Velocity = localVelocity;
 		MoveAndSlide();
 	}
+
+    internal void Die()
+    {
+        throw new NotImplementedException();
+    }
+
 }
