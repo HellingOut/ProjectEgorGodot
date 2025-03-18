@@ -6,11 +6,13 @@ public partial class Enemy : CharacterBody2D
 {
 	CollisionShape2D _collision = null;
 	float _direction = 0;
+	[Export] public float HP = 100;
 	[Export] public float TopSpeed = 0;
 	[Export] public float Acceleration = 0.1f;
 	[Export] public float Braking = 0.6f;
 	[Export] public float Gravity = 20;
 	[Export] public float JumpPower = 600;
+	[Export] public float Damage = 10;
 
 	public override void _Ready()
 	{

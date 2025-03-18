@@ -9,17 +9,14 @@ public partial class Player : CharacterBody2D
 	CollisionShape2D _collision = null;
 	Area2D _area2D = null;
 	float _direction = 0;
-	[Export] public float TopSpeed = 300;
-	[Export] public float Acceleration = 0.1f;
-	[Export] public float Braking = 0.6f;
-	[Export] public float Gravity = 20;
-	[Export] public float JumpPower = 600;
 
 	public override void _Ready()
 	{
 		_sprite = GetNode<AnimatedSprite2D>("Sprite");
 		_area2D = GetNode<Area2D>("Area2D");
 		_area2D.Connect("body_entered", new Godot.Callable(this,"OnBodyEntered"));
+		_area2D.Connect("body_entered",  new Godot.Callable(this,"TakeDamageOnEnemyEnterCollision"));
+		ModifyHP += CalculateHp;
 	}
 
 	void OnBodyEntered(Node2D body){
@@ -59,18 +56,21 @@ public partial class Player : CharacterBody2D
 			localVelocity.X = Mathf.Lerp(localVelocity.X, TopSpeed * _direction, Acceleration * (float)delta);
 			_sprite.Scale = new Vector2(_direction, 1);
 			_sprite.Play("walk");
+			HP += 10;
 		}
 		else if (_direction == 0)
 		{
 			_sprite.Play("idle");
 			localVelocity.X = Mathf.Lerp(localVelocity.X, 0, Braking * (float)delta);
 		}
+		
 	}
 	void Jump(ref Vector2 localVelocity)
 	{
 		if (Input.IsActionPressed("jump"))
 		{
 			localVelocity.Y = -JumpPower;
+			
 		}
 	}
 

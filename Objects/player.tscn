@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://dt325nl72ii58"]
+[gd_scene load_steps=14 format=3 uid="uid://dt325nl72ii58"]
 
 [ext_resource type="Script" uid="uid://ddh8n5t1c1h0" path="res://Scripts/Player.cs" id="1_3y5cq"]
 [ext_resource type="Texture2D" uid="uid://bqy8vlp4kibey" path="res://Assets/Sprites/characters.png" id="2_3y5cq"]
+[ext_resource type="Script" uid="uid://dhcdie5uivk8j" path="res://Scripts/UI.cs" id="3_2i4gt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3y5cq"]
 radius = 9.0
@@ -109,5 +110,27 @@ frame_progress = 0.403009
 position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_2i4gt")
 debug_color = Color(0.953292, 0.102954, 0.480093, 0.42)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "100"
+script = ExtResource("3_2i4gt")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

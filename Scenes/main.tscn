@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://boka4rma7cyfw"]
+[gd_scene load_steps=9 format=4 uid="uid://boka4rma7cyfw"]
 
 [ext_resource type="PackedScene" uid="uid://dt325nl72ii58" path="res://Objects/player.tscn" id="1_jjgbg"]
 [ext_resource type="TileSet" uid="uid://d2nsur27e8eaq" path="res://Tilesets/world.tres" id="2_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://dttsn62uy2ox5" path="res://Assets/Sprites/sheet.png" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://d25l03tjq72hp" path="res://Tilesets/enemy.tscn" id="4_jjvhh"]
 [ext_resource type="Script" uid="uid://bpwxsl5x7soxo" path="res://Tilesets/Enemy.cs" id="5_kry3j"]
+[ext_resource type="Texture2D" uid="uid://d1yct3wm3xoh5" path="res://Tilesets/9bb95379853451483d6ba9933003de67.jpg" id="6_21xkr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jjvhh"]
 texture = ExtResource("3_8gbba")
@@ -398,3 +399,10 @@ TopSpeed = 160.0
 [node name="Enemy" parent="." instance=ExtResource("4_jjvhh")]
 position = Vector2(89, 95)
 script = ExtResource("5_kry3j")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(3, 5)
+texture = ExtResource("6_21xkr")
